@@ -1,0 +1,30 @@
+<style>
+  @keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
+</style>
+
+{% if messages %}
+{% for message in messages %}
+<div id="message" class="container">
+  <div {% if message.tags %} class="alert alert-{{message.tags}}" {% endif %} role="alert">
+    {% if message.level == DEFAULT_MESSAGE_LEVEL.ERROR %}Error: {% endif %}
+    {{ message }}
+  </div>
+</div>
+  {% endfor %}
+  {% endif %}
+<script>
+  setTimeout(function (){
+    var message = document.getElementById('message')
+    if (message) {
+      message.style.animation = 'fadeOut 1s';
+      setTimeout(function (){
+        message.parentNode.removeChild(message)
+      }, 1000);
+    }
+  }, 5000);
+</script>
+
+

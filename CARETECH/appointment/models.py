@@ -5,6 +5,7 @@ from MedicalHistory.models import Hospital
 # Create your models here.
 
 STATUS = [
+    ('requested', 'requested'),
     ('scheduled', 'scheduled'),
     ('completed', 'completed'),
     ('cancelled', 'cancelled'),
@@ -17,6 +18,7 @@ class Appointment(models.Model):
     provider = models.ForeignKey(HealthCareProvider, on_delete=models.CASCADE)
     hospitals = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     appointment_date = models.DateTimeField(auto_now=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
     status = models.CharField(max_length=100, choices=STATUS)
     is_active = models.BooleanField(default=False)
 

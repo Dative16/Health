@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% autoescape off %}
 
-</body>
-</html>
+Hi {{user.first_name}},
+
+YOUR APPOINTMENT HAS BEEN CREATED AND SENT TO {{ appointment.hospital }}
+
+Appointment: {{appointment.hospital}} - {{ appointment.provider }}
+
+
+{% endautoescape %}

@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="layout__body">
-            <h2 class="auth__tagline">Find your study partner</h2>
+            <h2 class="auth__tagline">Login to CareTech</h2>
 
             <form class="form" action="#" method="POST">
                {% csrf_token %}
@@ -51,7 +51,9 @@
             </form>
 
             <div class="auth__action">
-              <p>Haven't signed up yet?</p>
+              <p>Forgot Your Password? click</p>
+              <a href="{% url 'forgotPassword' %}" class="btn btn--link">Here</a>
+                <p>Haven't signed up yet?</p>
               <a href="{% url 'register' %}" class="btn btn--link">Sign Up</a>
             </div>
           </div>

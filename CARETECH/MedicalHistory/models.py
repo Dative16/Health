@@ -9,11 +9,17 @@ class Hospital(models.Model):
     address = models.TextField(max_length=1000)
     contact = models.TextField(max_length=1000)
 
+    def __str__(self):
+        return self.name
+
 
 class CurrentMedication(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     blood_pressure = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.patient.user.first_name
 
 
 class MedicalHistory(models.Model):
@@ -22,3 +28,6 @@ class MedicalHistory(models.Model):
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     prescription = models.ForeignKey(CurrentMedication, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.patient.user.first_name

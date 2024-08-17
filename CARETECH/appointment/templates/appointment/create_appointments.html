@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/main.html' %}
+{% load static %}
+{% block title %}
+    Create appointments
+{% endblock %}
+{% block content %}
+    {% include 'base/alerts.html' %}
 
-</body>
-</html>
+    <main class="auth layout">
+        <div class="container">
+            <div class="layout__box">
+                <div class="layout__boxHeader">
+                    <div class="layout__boxTitle">
+                        <h3>Create Appointments</h3>
+                    </div>
+                </div>
+                <div class="layout__body">
+                    <h2 class="auth__tagline">Create Appointments</h2>
+
+                    <form class="form" action="#" method="POST">
+                        {% csrf_token %}
+                        <div class="form__group form__group">
+                            <label for="hospitals">Hospital</label>
+                            {{ form.hospitals }}
+                            {#              <input id="email" name="email" type="text" placeholder="e.g. example@example.com" />#}
+                        </div>
+                        <div class="form__group form__group">
+                            <label for="provider">Provider (eg.Doctor)</label>
+                            {{ form.provider }}
+                            {#              <input id="email" name="email" type="text" placeholder="e.g. example@example.com" />#}
+                        </div>
+                        <div class="form__group form__group">
+                            <label for="descriptions">Descriptions</label>
+                            {{ form.description }}
+                            {#              <input id="email" name="email" type="text" placeholder="e.g. example@example.com" />#}
+                        </div>
+
+
+                        <button class="btn btn--main" type="submit">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                 viewBox="0 0 32 32">
+                                <title>add</title>
+                                <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z"></path>
+                            </svg>
+
+                            Create Appointment
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -11,9 +11,10 @@ import pandas as pd
 import numpy as np
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-import pyttsx3
+# import pyttsx3
 # from django.conf import settings
 from CARETECH import settings
+import json
 
 # Load and preprocess data
 training = settings.training_data
@@ -48,13 +49,13 @@ def calc_condition(exp, days):
     if ((sum * days) / (len(exp) + 1) > 13):
         sentence = "You should take the consultation from doctor. "
         print(sentence)
-        readn(sentence)
+        # readn(sentence)
         return sentence
 
     else:
         sentence = "It might not be that bad but you should take precautions."
         print(sentence)
-        readn(sentence)
+        # readn(sentence)
         return sentence
 
 
@@ -94,13 +95,13 @@ getDescription()
 getprecautionDict()
 
 
-def readn(nstr):
-    engine = pyttsx3.init()
-    engine.setProperty('voice', "english+f5")
-    engine.setProperty('rate', 130)
-    engine.say(nstr)
-    engine.runAndWait()
-    engine.stop()
+# def readn(nstr):
+#     engine = pyttsx3.init()
+#     engine.setProperty('voice', "english+f5")
+#     engine.setProperty('rate', 130)
+#     engine.say(nstr)
+#     engine.runAndWait()
+#     engine.stop()
 
 
 def extract_symptoms(message):
@@ -167,7 +168,10 @@ def chat_view(request):
         days = int(request.POST.get("days", 1))
 
         response = get_response(symptoms_input, days)
-        return JsonResponse(response, safe=False)
+        conv = Conversation.objects.create(user=request.user, message=symptoms_input, response=response,
+                                           context=json.dumps(response))
+        conv.save()
+        # return JsonResponse(response, safe=False)
     conversations = Conversation.objects.filter(user=request.user)
     context = {
         "conversations": conversations

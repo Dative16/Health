@@ -38,7 +38,7 @@
             <!-- Logged In -->
 
             <div class="header__user">
-                <a href="profile.html">
+                <a href="{% url 'profile' %}">
                     <div class="avatar avatar--medium active">
                         <img src="{% static 'assets/logo.svg' %}"/>
                     </div>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="dropdown-menu">
-                <a href="settings.html" class="dropdown-link"
+                <a href="{% url 'change_password' %}" class="dropdown-link"
                 >
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                         <title>tools</title>
@@ -76,13 +76,21 @@
                     </svg>
                     Logout</a
                 >
+                <a href="{% url 'create_appointment' %}" class="dropdown-link"
+                >
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                        <title>add</title>
+                        <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z"></path>
+                    </svg>
+                    Add Appointment</a
+                >
                 <a href="{% url 'chat' %}" class="dropdown-link"
                 >
                     <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1"
                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                          viewBox="0 0 512 512" xml:space="preserve">
                         <title>Chat Now</title>
-<g>
+                        <g>
 	<g>
 		<path d="M452.885,0H165.781c-32.597,0-59.115,26.539-59.115,59.136v47.531H59.115C26.517,106.667,0,133.205,0,165.803v180.416
 			c0,32.597,26.517,59.115,59.115,59.115H64v85.333c0,8.64,5.184,16.427,13.163,19.712c2.645,1.109,5.419,1.621,8.171,1.621

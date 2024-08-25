@@ -1,5 +1,8 @@
 import csv
 import re
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -21,6 +24,7 @@ training = settings.training_data
 testing = settings.testing_data
 cols = training.columns[:-1]
 x = training[cols]
+
 y = training['prognosis']
 
 le = preprocessing.LabelEncoder()
@@ -155,25 +159,47 @@ def get_response(symptoms_input, days):
         "disease": present_disease,
         "description": description,
         "precautions": precautions,
+        "condition": calc_condition(days=days, exp=symptoms_present)
     }
+    response = (
+        f"You may have {present_disease}. {description} "
+        f"Recommended precautions: {', '.join(precautions)}. "
+        f"Based on your symptoms and duration, {calc_condition(days=days, exp=symptoms_present)}"
+    )
 
     return response
+
+
+def format_symptom(symptom):
+    return symptom.replace('_', ' ')
 
 
 @login_required(login_url='login')
 def chat_view(request):
     if request.method == "POST":
         user_input = request.POST.get("message")
-        symptoms_input = user_input.split()  # Simple split by space, adapt as needed
-        days = int(request.POST.get("days", 1))
+        tokens = word_tokenize(user_input.lower())
 
-        response = get_response(symptoms_input, days)
-        conv = Conversation.objects.create(user=request.user, message=symptoms_input, response=response,
+        formatted_symptoms = [format_symptom(symptom) for symptom in cols]
+        detected_symptoms = [symptom for symptom in cols if format_symptom(symptom) in user_input]
+
+        print(formatted_symptoms)
+
+        # symptoms_input = user_input.split()  # Simple split by space, adapt as needed
+        days = [int(word) for word in tokens if word.isdigit()]
+        print(days)
+        print(detected_symptoms)
+        response = get_response(detected_symptoms, days[0])
+        conv = Conversation.objects.create(user=request.user, message=user_input, response=response,
                                            context=json.dumps(response))
         conv.save()
+        print(detected_symptoms)
         # return JsonResponse(response, safe=False)
     conversations = Conversation.objects.filter(user=request.user)
+    conversation_count = conversations.count()
+    print(conversations)
     context = {
-        "conversations": conversations
+        "conversations": conversations,
+        'conversation_count': conversation_count
     }
     return render(request, "chatbot/chat.html", context)

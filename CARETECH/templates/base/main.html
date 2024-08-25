@@ -5,7 +5,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="shortcut icon" href="{% static 'assets/logo.svg' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'assets/caretech.svg' %}" type="image/x-icon"/>
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <title>{% block title %} {% endblock title %}</title>
 </head>
@@ -14,7 +14,7 @@
 <header class="header header--loggedIn">
     <div class="container">
         <a href="/" class="header__logo">
-            <img src="{% static 'assets/logo.svg' %}"/>
+            <img src="{% static 'assets/caretech.svg' %}"/>
             <h1>CareTech</h1>
         </a>
         <form class="header__search">
@@ -40,7 +40,7 @@
             <div class="header__user">
                 <a href="{% url 'profile' %}">
                     <div class="avatar avatar--medium active">
-                        <img src="{% static 'assets/logo.svg' %}"/>
+                        <img src="{% static 'assets/avatar.svg' %}"/>
                     </div>
                     <p>{{ request.user }} <span>@{{ request.user.username }}</span></p>
                 </a>
